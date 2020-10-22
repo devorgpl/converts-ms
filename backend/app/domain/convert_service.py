@@ -1,3 +1,4 @@
+import os
 import pickle
 from datetime import datetime
 
@@ -9,6 +10,8 @@ from werkzeug.datastructures import FileStorage
 from domain.convert_model import StorePath, Convert, ConvertMetadata, Component
 from domain.parser_util import parse_input_file, generate_epp
 from utils.db_utils import converts_collection
+
+STORAGE_HOST = os.environ.get("STORAGE_HOST", 'localhost')
 
 
 def _find_component(convert, role):
@@ -22,7 +25,7 @@ def _upload_file_to_store(file, company_id):
     path = StorePath()
     path.bucket = company_id
     path.name = str(ObjectId()) + "_" + file.filename
-    minio_client = Minio('localhost:9000',
+    minio_client = Minio(STORAGE_HOST + ':9000',
                          access_key='AKIAIOSFODNN7EXAMPLE',
                          secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
                          secure=False)
@@ -97,7 +100,7 @@ def find_converts(company_id):
 
 def _download_temp_file(store_path):
     tempfile = '/tmp/' + store_path['name']
-    minio_client = Minio('localhost:9000',
+    minio_client = Minio(STORAGE_HOST + ':9000',
                          access_key='AKIAIOSFODNN7EXAMPLE',
                          secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
                          secure=False)
@@ -152,7 +155,7 @@ def convert_generate(convert_id):
     epp_component.role = 'generated'
     epp_component.order = 10
     epp_component.status = 'done'
-    minio_client = Minio('localhost:9000',
+    minio_client = Minio(STORAGE_HOST + ':9000',
                          access_key='AKIAIOSFODNN7EXAMPLE',
                          secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
                          secure=False)
