@@ -1,0 +1,173 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST company
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /convert:
+    post:
+      operationId: "convert.create_from_file"
+      tags:
+        - "create_from_file"
+      summary: "create_from_file"
+      description: "create_from_file"
+      consumes: [ "multipart/form-data" ]
+      produces: [ "application/json" ]
+      parameters:
+        - in: query
+          name: user_id
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: formData
+          name: company_id
+          type: string
+          required: true
+          description: Company id
+        - in: formData
+          name: document_file
+          type: file
+          required: true
+          description: The file to upload.
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "object"
+            items:
+              properties:
+                company_name:
+                  type: "string"
+    get:
+      operationId: "convert.find_all"
+      tags:
+        - "convert"
+      summary: "Get all"
+      description: "Get all"
+      parameters:
+        - in: query
+          name: user_id
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: query
+          name: company_id
+          required: true
+          type: string
+          minimum: 1
+          description: The company ID.
+      responses:
+        200:
+          description: "Success get"
+          schema:
+            type: "object"
+            items:
+              properties:
+                name:
+                  type: "string"
+
+  /convert/{convert_id}/parse:
+    get:
+      operationId: "convert.parse"
+      tags:
+        - "convert"
+      summary: "Get all"
+      description: "Get all"
+      parameters:
+        - in: query
+          name: user_id
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: path
+          name: convert_id
+          required: true
+          type: string
+          minimum: 1
+          description: The convert ID.
+      responses:
+        200:
+          description: "Success get"
+          schema:
+            type: "object"
+            items:
+              properties:
+                name:
+                  type: "string"
+
+  /convert/{convert_id}/generate:
+    get:
+      operationId: "convert.generate"
+      tags:
+        - "convert"
+      summary: "Get all"
+      description: "Get all"
+      parameters:
+        - in: query
+          name: user_id
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: path
+          name: convert_id
+          required: true
+          type: string
+          minimum: 1
+          description: The convert ID.
+      responses:
+        200:
+          description: "Success get"
+          schema:
+            type: "object"
+            items:
+              properties:
+                name:
+                  type: "string"
+
+
+  /convert/{convert_id}/download/{component_type}:
+    get:
+      operationId: "convert.download"
+      tags:
+        - "convert"
+      summary: "Get all"
+      description: "Get all"
+      parameters:
+        - in: query
+          name: user_id
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: path
+          name: convert_id
+          required: true
+          type: string
+          minimum: 1
+          description: The convert ID.
+        - in: path
+          name: component_type
+          required: true
+          type: string
+          minimum: 1
+          description: component type
+      responses:
+        200:
+          description: "Success get"
+          schema:
+            type: "object"
+            items:
+              properties:
+                name:
+                  type: "string"
