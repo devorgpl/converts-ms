@@ -5,3 +5,4 @@ flask
 flask_cors
 minio
 werkzeug
+https://github.com/devorgpl/invoiceconverter/releases/download/v0.1.1/invoiceconverterlib-0.1.1-py3-none-any.whl
