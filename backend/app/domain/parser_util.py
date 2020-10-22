@@ -14,7 +14,7 @@ def parse_input_file(filename):
 
 
 def generate_epp(filename: str, parsed):
-    tempfile = "/tmp/" + filename + ".epp"
+    tempfile = "/tmp/" + filename
     invoice_obj = pickle.loads(parsed['data'])
-    ic.fgenerate_epp(filename, invoice_obj)
-    return tempfile
+    ic.fgenerate_epp(tempfile, invoice_obj)
+    return tempfile + ".epp"
