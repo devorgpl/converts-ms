@@ -12,6 +12,8 @@ from domain.parser_util import parse_input_file, generate_epp
 from utils.db_utils import converts_collection
 
 STORAGE_HOST = os.environ.get("STORAGE_HOST", 'localhost')
+MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY", 'AKIAIOSFODNN7EXAMPLE')
+MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY", 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY')
 
 
 def _find_component(convert, role):
@@ -26,8 +28,8 @@ def _upload_file_to_store(file, company_id):
     path.bucket = company_id
     path.name = str(ObjectId()) + "_" + file.filename
     minio_client = Minio(STORAGE_HOST + ':9000',
-                         access_key='AKIAIOSFODNN7EXAMPLE',
-                         secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+                         access_key=MINIO_ACCESS_KEY,
+                         secret_key=MINIO_SECRET_KEY,
                          secure=False)
     # Make a bucket with the make_bucket API call.
     try:
@@ -101,8 +103,8 @@ def find_converts(company_id):
 def _download_temp_file(store_path):
     tempfile = '/tmp/' + store_path['name']
     minio_client = Minio(STORAGE_HOST + ':9000',
-                         access_key='AKIAIOSFODNN7EXAMPLE',
-                         secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+                         access_key=MINIO_ACCESS_KEY,
+                         secret_key=MINIO_SECRET_KEY,
                          secure=False)
     minio_client.fget_object(store_path['bucket'], store_path['name'], tempfile)
     print(tempfile)
