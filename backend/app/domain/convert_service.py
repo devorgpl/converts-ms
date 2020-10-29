@@ -158,8 +158,8 @@ def convert_generate(convert_id):
     epp_component.order = 10
     epp_component.status = 'done'
     minio_client = Minio(STORAGE_HOST + ':9000',
-                         access_key='AKIAIOSFODNN7EXAMPLE',
-                         secret_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+                         access_key=MINIO_ACCESS_KEY,
+                         secret_key=MINIO_SECRET_KEY,
                          secure=False)
     minio_client.fput_object(epp_component.store_path.bucket, epp_component.store_path.name, tempfile)
     _insert_component(convert_id, epp_component)
